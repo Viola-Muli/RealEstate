@@ -8,10 +8,14 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.realestate.ui.theme.screens.about.AboutScreen
+import com.example.realestate.ui.theme.screens.dashboard.DashBoardScreen
 import com.example.realestate.ui.theme.screens.detail.DetailsScreen
 import com.example.realestate.ui.theme.screens.detail.DetailsScreenpreview
 import com.example.realestate.ui.theme.screens.home.HomeScreen
 import com.example.realestate.ui.theme.screens.intent.IntentScreen
+import com.example.realestate.ui.theme.screens.login.LogInScreen
+import com.example.realestate.ui.theme.screens.products.AddProductsScreen
+import com.example.realestate.ui.theme.screens.products.ViewProductsScreen
 import com.example.realestate.ui.theme.screens.property.PropertyScreen
 import com.example.realestate.ui.theme.screens.signup.SignupScreen
 import com.example.realestate.ui.theme.screens.splash.SplashScreen
@@ -51,6 +55,19 @@ fun AppNavHost(
         composable(ROUT_SIGNUP) {
           SignupScreen (navController = navController)
         }
+        composable(ROUT_LOGIN) {
+            LogInScreen(navController = navController)
+        }
+        composable(ROUT_DASHBOARD) {
+            DashBoardScreen(navController = navController)
+        }
+        composable(ADD_PRODUCTS_URL) {
+            AddProductsScreen(navController = navController)
+        }
+        composable(VIEW_PRODUCTS_URL) {
+            ViewProductsScreen(navController = navController)
+        }
 
 
-}}
+
+    }}

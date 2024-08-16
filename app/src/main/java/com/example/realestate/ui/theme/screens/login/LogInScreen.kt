@@ -1,6 +1,7 @@
-package com.example.realestate.ui.theme.screens.signup
+package com.example.realestate.ui.theme.screens.login
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -13,7 +14,6 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Lock
-import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
@@ -35,6 +35,7 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -42,16 +43,19 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.realestate.R
 import com.example.realestate.data.AuthViewModel
-import com.example.realestate.navigation.ROUT_LOGIN
+import com.example.realestate.navigation.ROUT_HOME
+import com.example.realestate.navigation.ROUT_SIGNUP
 import com.example.realestate.ui.theme.Dark
+import com.example.realestate.ui.theme.Darkergreen
 import com.example.realestate.ui.theme.Sleek
 
 @Composable
-fun SignupScreen(navController: NavController){
-    Column(modifier = Modifier.fillMaxSize()
-        .paint(painterResource(id = R.drawable.img_7), contentScale = ContentScale.FillBounds),
+fun LogInScreen(navController: NavController){
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .paint(painterResource(id = R.drawable.img_7), contentScale = ContentScale.FillBounds),
         horizontalAlignment = Alignment.CenterHorizontally,
-
     ) {
         Spacer(modifier = Modifier.height(50.dp))
 
@@ -59,35 +63,27 @@ fun SignupScreen(navController: NavController){
             contentDescription ="signup",
             modifier = Modifier
                 .size(200.dp)
-
         )
-        Spacer(modifier = Modifier.height(20.dp))
+        Spacer(modifier = Modifier.height(10.dp))
 
         Text(
-            text ="MagicBricks",
-            fontSize = 75.sp,
+            text ="Welcome Back!",
+            fontSize = 65.sp,
             fontFamily = FontFamily.Cursive,
-            color = Dark ,
-            fontWeight = FontWeight.ExtraBold
+            color = Darkergreen ,
+            fontWeight = FontWeight.ExtraBold,
         )
-        Spacer(modifier = Modifier.height(50.dp))
-
-        var name by remember { mutableStateOf("") }
-        var email by remember{mutableStateOf("") }
-        var password by remember { mutableStateOf("") }
-        var confpassword by remember { mutableStateOf("") }
-
-        OutlinedTextField(
-            value = name ,
-            onValueChange = {name = it},
-            label = { Text(text = "Enter Full Name")},
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(start = 20.dp, end = 20.dp),
-            leadingIcon = { Icon(imageVector = Icons.Default.Person, contentDescription = "", tint = Sleek)},
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text)
-            )
         Spacer(modifier = Modifier.height(20.dp))
+        Text(
+            text ="Already have an account?Please enter credentials.",
+            fontSize = 18.sp,
+            fontFamily = FontFamily.SansSerif,
+            color = Color.Black ,
+            textAlign = TextAlign.Center,
+            fontWeight = FontWeight.Normal
+        )
+        var email by remember{ mutableStateOf("") }
+        var password by remember { mutableStateOf("") }
         OutlinedTextField(
             value = email ,
             onValueChange = {email = it},
@@ -95,7 +91,7 @@ fun SignupScreen(navController: NavController){
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(start = 20.dp, end = 20.dp),
-            leadingIcon = { Icon(imageVector = Icons.Default.Email, contentDescription = "", tint = Sleek)},
+            leadingIcon = { Icon(imageVector = Icons.Default.Email, contentDescription = "", tint = Sleek) },
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email)
         )
         Spacer(modifier = Modifier.height(20.dp))
@@ -105,20 +101,8 @@ fun SignupScreen(navController: NavController){
             label = { Text(text = "Enter Password")},
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(start = 20.dp, end = 20.dp),   
-            leadingIcon = { Icon(imageVector = Icons.Default.Lock, contentDescription = "", tint = Sleek)},
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
-            visualTransformation = PasswordVisualTransformation()
-        )
-        Spacer(modifier = Modifier.height(20.dp))
-        OutlinedTextField(
-            value = confpassword ,
-            onValueChange = {confpassword = it},
-            label = { Text(text = "Confirm Password")},
-            modifier = Modifier
-                .fillMaxWidth()
                 .padding(start = 20.dp, end = 20.dp),
-            leadingIcon = { Icon(imageVector = Icons.Default.Lock, contentDescription = "", tint = Sleek)},
+            leadingIcon = { Icon(imageVector = Icons.Default.Lock, contentDescription = "", tint = Sleek) },
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
             visualTransformation = PasswordVisualTransformation()
         )
@@ -126,35 +110,39 @@ fun SignupScreen(navController: NavController){
         val context = LocalContext.current
         val authViewModel = AuthViewModel(navController, context)
         Button(onClick = {
-            authViewModel.signup(name, email, password,confpassword)
-        },
+            authViewModel.login(email, password) },
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(start = 70.dp, end = 70.dp)
-                .height(40.dp),
+                .height(50.dp),
             colors = ButtonDefaults.buttonColors(Color.Black),
             shape = RoundedCornerShape(100.dp)
-
         ) {
             Text(
-                text = "Create Account"
+                text = "LOGIN"
             )
-
         }
         Spacer(modifier = Modifier.height(20.dp))
-        Button(onClick = {navController.navigate(ROUT_LOGIN)  },
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(start = 70.dp, end = 70.dp)
-                .height(40.dp),
-            colors = ButtonDefaults.buttonColors(Color.Black),
-            shape = RoundedCornerShape(100.dp)
+        Text(
+            text ="Don't have an account? Signup here",
+            fontSize = 18.sp,
+            fontFamily = FontFamily.Serif,
+            color = Color.Black ,
+            textAlign = TextAlign.Center,
+            fontWeight = FontWeight.Normal,
+            modifier = Modifier.clickable {
+                navController.navigate(ROUT_SIGNUP)
+            }
+        )
 
-        ) {
-            Text(
-                text = "Log In"
-            )
-        }
+
+
+
+
+
+
+
+
     }
 
 
@@ -162,7 +150,7 @@ fun SignupScreen(navController: NavController){
 
 @Composable
 @Preview(showBackground = true)
-fun SignupScreenPreview(){
-   SignupScreen(rememberNavController())
+fun LogInScreenPreview(){
+    LogInScreen(rememberNavController())
 
 }
